@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Temporary Files/Misc
+ .DS_Store
+.swp
+.swo
