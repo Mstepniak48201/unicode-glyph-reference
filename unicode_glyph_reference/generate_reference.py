@@ -5,9 +5,10 @@ def main():
     file_name = input("File name: ")
 
     # Trim the file name to add to the .txt file
-    txt_output_name = trim_filename(file_name)
+    trimmed_file_name = trim_filename(file_name)
+    output_txt_file_name = add_file_extension(trimmed_file_name)
 
-    print(txt_output_name)
+    print(output_txt_file_name)
 
     if Path(file_name).is_file():
         print("The file exists")
@@ -37,6 +38,9 @@ def trim_filename(file_name):
             output.append(char)
 
     return "".join(output)
+
+def add_file_extension(file_name):
+    return "".join([file_name, ".txt"])
             
         
 
