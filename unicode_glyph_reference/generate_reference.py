@@ -4,31 +4,37 @@ from fontTools import ttLib
 def main():
     file_name = input("File name: ")
 
-    # Trim the file name to add to the .txt file
-    trimmed_file_name = trim_filename(file_name)
-    output_txt_file_name = add_file_extension(trimmed_file_name)
-
-    print(output_txt_file_name)
-
+    # Debug if input file exists
     if Path(file_name).is_file():
         print("The file exists")
+
+    # Import the name of the input file to the output file, change extension, open new txt file.
+    trimmed_file_name = trim_filename(file_name)
+    output_file_name = add_file_extension(trimmed_file_name)
+    output_file = open(output_file_name, "x")
 
     # Get reference to the font.
     font = ttLib.TTFont(file_name)
 
-    # Get the cmap table from the font.
-    # After testing, I know that:
-    # the value is a Python dict,
-    # and that the key value pairs are decimal_value: string_value
+    # Get the cmap table (Python dict) from the font. Key: Value pairs are decimal_val: string_val
     font_cmap = font.getBestCmap()
     
-    #convert keys in font_cmap dict to hex
+    #convert keys in font_cmap dict to hex 
     hex_keys = []
     for key in font_cmap:
         hex_keys.append(hex(key))
-        
-    # print(hex_keys)
- 
+
+    test_arr = ["Hello", "World", "append", "this", "value"]
+
+    for el in test_arr:
+        with open(output_file_name, "a") as f:
+            f.write(el)
+
+    
+      
+
+#Utility files
+
 def trim_filename(file_name):
     output = []
     for char in file_name:
