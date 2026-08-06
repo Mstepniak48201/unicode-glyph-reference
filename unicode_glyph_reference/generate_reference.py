@@ -22,13 +22,24 @@ def main():
     #convert keys in font_cmap dict to hex 
     hex_keys = []
     for key in font_cmap:
-        hex_keys.append(hex(key))
-
+        key_arr = []
+        for el in hex(key):
+            key_arr.append(el)
+    
+        f_key = "".join(key_arr[2:])
+        hex_keys.append(f_key)
 
     for el in hex_keys:
         with open(output_file_name, "a", encoding="utf-8") as f:
             f.write(f"{el}\n")
+    
 
+"""
+
+    # Test out glyphs
+    for el in hex_keys:
+        with open(output_file_name, "a", encoding="utf-8") as f:
+            f.write(f"{f_string}\n")
 
 
     # Test Array
@@ -36,7 +47,7 @@ def main():
     for el in test_arr:
         with open(output_file_name, "a") as f:
             f.write(el)
-
+"""
     
       
 
