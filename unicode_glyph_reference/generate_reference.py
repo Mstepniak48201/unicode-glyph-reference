@@ -24,8 +24,15 @@ def main():
     for key in font_cmap:
         hex_keys.append(hex(key))
 
-    test_arr = ["Hello", "World", "append", "this", "value"]
 
+    for el in hex_keys:
+        with open(output_file_name, "a", encoding="utf-8") as f:
+            f.write(f"{el}\n")
+
+
+
+    # Test Array
+    test_arr = ["Hello", "World", "append", "this", "value"]
     for el in test_arr:
         with open(output_file_name, "a") as f:
             f.write(el)
