@@ -25,7 +25,13 @@ def main():
     # Format Hex Unicode Escape Codes
     hex_u_points = get_hex_u_points(decimal_u_points)
 
-    print(hex_u_points)
+    with open(output_file_name, "a", encoding="utf-8") as f:
+        f.write(f"Unicode Point  |  Glyph")
+    
+
+    for el in hex_u_points:
+        with open(output_file_name, "a", encoding="utf-8") as f:
+            f.write(f"{el}\n")
 
             
     """
@@ -76,7 +82,10 @@ def get_hex_u_points(decimal_u_points):
         str_result = []
         hex_point = hex(dec)
         if dec < 65536:
-            str_result.append("00")
+            str_result.append("\\u00")
+            str_result.append(hex_point[2:])
+        else:
+            str_result.append("\\U0000")
             str_result.append(hex_point[2:])
         hex_result.append("".join(str_result))
 
