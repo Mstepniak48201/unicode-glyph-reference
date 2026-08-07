@@ -18,6 +18,17 @@ def main():
 
     # Get the cmap table (Python dict) from the font. Key: Value pairs are decimal_val: string_val
     font_cmap = font.getBestCmap()
+
+    # Decimal Unicode Points
+    decimal_u_points = get_decimal_u_points(font_cmap)
+
+    # Format Hex Unicode Escape Codes
+    hex_u_points = get_hex_u_points(decimal_u_points)
+
+    print(hex_u_points)
+
+            
+    """
     
     #convert keys in font_cmap dict to hex 
     hex_keys = []
@@ -31,25 +42,8 @@ def main():
 
     for el in hex_keys:
         with open(output_file_name, "a", encoding="utf-8") as f:
-            f.write(f"{el}\n")
-    
-
-"""
-
-    # Test out glyphs
-    for el in hex_keys:
-        with open(output_file_name, "a", encoding="utf-8") as f:
-            f.write(f"{f_string}\n")
-
-
-    # Test Array
-    test_arr = ["Hello", "World", "append", "this", "value"]
-    for el in test_arr:
-        with open(output_file_name, "a") as f:
-            f.write(el)
-"""
-    
-      
+            f.write(f"\\u00{el}\n")
+    """
 
 #Utility files
 
@@ -65,7 +59,28 @@ def trim_filename(file_name):
 
 def add_file_extension(file_name):
     return "".join([file_name, ".txt"])
+
+def get_decimal_u_points(cmap):
+    result = []
+    for key in cmap:
+        result.append(key)
+    return result
             
+def get_hex_u_points(decimal_u_points):
+    # Return array of formatted hex u points.
+    hex_result = []
+
+    # Iterate over array of decimal u points.
+    for dec in decimal_u_points:
+        # Construct an array to be joined as string.
+        str_result = []
+        hex_point = hex(dec)
+        if dec < 65536:
+            str_result.append("00")
+            str_result.append(hex_point[2:])
+        hex_result.append("".join(str_result))
+
+    return hex_result
         
 
 if __name__ == "__main__":
