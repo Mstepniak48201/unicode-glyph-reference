@@ -217,6 +217,10 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Input and Output Files
+.ttf
+output_text_files/
+
 # Temporary Files/Misc
  .DS_Store
 .swp
