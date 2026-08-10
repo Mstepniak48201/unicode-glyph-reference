@@ -223,5 +223,5 @@ output_text_files/
 
 # Temporary Files/Misc
  .DS_Store
-.swp
-.swo
+*.swp
+*.swo
