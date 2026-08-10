@@ -4,14 +4,10 @@ from fontTools import ttLib
 
 def main():
     file_name = input("File name: ")
+    output_dir = "./output_text_files"
 
     # Initialize output directory
-    initialize_output_directory("./output_text_files")
-
-
-    with open("./output_text_files/test.txt", "a", encoding="utf-8") as f:
-        f.write(f"hello output directory!\n") 
-
+    initialize_output_directory(output_dir)
 
     # Debug if input file exists
     if Path(file_name).is_file():
@@ -20,7 +16,7 @@ def main():
     # Import the name of the input file to the output file, change extension, open new txt file.
     trimmed_file_name = trim_filename(file_name)
     output_file_name = add_file_extension(trimmed_file_name)
-    output_file = open(output_file_name, "x")
+    # output_file = open(output_file_name, "x")
 
     # Get reference to the font.
     font = ttLib.TTFont(file_name)
@@ -37,11 +33,11 @@ def main():
     # Format Hex Unicode Escape Codes
     hex_u_points = get_hex_u_points(decimal_u_points)
 
-    with open(output_file_name, "a", encoding="utf-8") as f:
+    with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
         f.write(f"Unicode Point  |  Glyph   |   Name\n") 
     
     for i in range(len(decimal_u_points)):
-        with open(output_file_name, "a", encoding="utf-8") as f:
+        with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
             f.write(f"{hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
 
 
