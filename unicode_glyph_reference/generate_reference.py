@@ -19,6 +19,9 @@ def main():
     # Get the cmap table (Python dict) from the font. Key: Value pairs are decimal_val: string_val
     font_cmap = font.getBestCmap()
 
+    # Get glyph names
+    glyph_names = get_glyph_names(font_cmap)
+
     # Decimal Unicode Points
     decimal_u_points = get_decimal_u_points(font_cmap)
 
@@ -26,13 +29,17 @@ def main():
     hex_u_points = get_hex_u_points(decimal_u_points)
 
     with open(output_file_name, "a", encoding="utf-8") as f:
-        f.write(f"Unicode Point  |  Glyph")
+        f.write(f"Unicode Point  |  Glyph   |   Name\n") 
     
+    for i in range(len(decimal_u_points)):
+        with open(output_file_name, "a", encoding="utf-8") as f:
+            f.write(f"{hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
 
+    """
     for el in hex_u_points:
         with open(output_file_name, "a", encoding="utf-8") as f:
             f.write(f"{el}\n")
-
+    """
             
     """
     
@@ -65,6 +72,12 @@ def trim_filename(file_name):
 
 def add_file_extension(file_name):
     return "".join([file_name, ".txt"])
+
+def get_glyph_names(cmap):
+    result = []
+    for key in cmap:
+        result.append(cmap[key])
+    return result
 
 def get_decimal_u_points(cmap):
     result = []
