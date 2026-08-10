@@ -35,30 +35,8 @@ def main():
         with open(output_file_name, "a", encoding="utf-8") as f:
             f.write(f"{hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
 
-    """
-    for el in hex_u_points:
-        with open(output_file_name, "a", encoding="utf-8") as f:
-            f.write(f"{el}\n")
-    """
-            
-    """
-    
-    #convert keys in font_cmap dict to hex 
-    hex_keys = []
-    for key in font_cmap:
-        key_arr = []
-        for el in hex(key):
-            key_arr.append(el)
-    
-        f_key = "".join(key_arr[2:])
-        hex_keys.append(f_key)
 
-    for el in hex_keys:
-        with open(output_file_name, "a", encoding="utf-8") as f:
-            f.write(f"\\u00{el}\n")
-    """
-
-#Utility files
+#Utility functions
 
 def trim_filename(file_name):
     output = []
