@@ -1,8 +1,17 @@
+import os
 from pathlib import Path
 from fontTools import ttLib
 
 def main():
     file_name = input("File name: ")
+
+    # Initialize output directory
+    initialize_output_directory("./output_text_files")
+
+
+    with open("./output_text_files/test.txt", "a", encoding="utf-8") as f:
+        f.write(f"hello output directory!\n") 
+
 
     # Debug if input file exists
     if Path(file_name).is_file():
@@ -81,6 +90,10 @@ def get_hex_u_points(decimal_u_points):
         hex_result.append("".join(str_result))
 
     return hex_result
+
+def initialize_output_directory(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
         
 
 if __name__ == "__main__":
