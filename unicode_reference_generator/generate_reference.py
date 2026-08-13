@@ -1,22 +1,21 @@
-import os
+import sys
 from pathlib import Path
 from fontTools import ttLib
+import path_mod
+import font_utils
 
 def main():
-    file_name = input("File name: ")
-    output_dir = "./output_text_files"
-
     # Initialize output directory
-    initialize_output_directory(output_dir)
+    # Use variable for now because future feature will allow user to enter a custom path.
+    output_dir = "./output_text_files"
+    path_mod.initialize_output_directory(output_dir)
 
-    # Debug if input file exists
-    if Path(file_name).is_file():
-        print("The file exists")
+    # Get .ttf file from user input
+    file_name = get_file_name()
 
-    # Import the name of the input file to the output file, change extension, open new txt file.
-    trimmed_file_name = trim_filename(file_name)
-    output_file_name = add_file_extension(trimmed_file_name)
-    # output_file = open(output_file_name, "x")
+    # Change the file extension from the input .ttf file to .txt for the output file.
+    trimmed_file_name = path_mod.trim_file_ext(file_name)
+    output_file_name = path_mod.add_file_extension(trimmed_file_name)
 
     # Get reference to the font.
     font = ttLib.TTFont(file_name)
@@ -25,14 +24,16 @@ def main():
     font_cmap = font.getBestCmap()
 
     # Get glyph names
-    glyph_names = get_glyph_names(font_cmap)
+    glyph_names = font_utils.get_glyph_names(font_cmap)
 
     # Decimal Unicode Points
-    decimal_u_points = get_decimal_u_points(font_cmap)
+    decimal_u_points = font_utils.get_decimal_u_points(font_cmap)
 
     # Format Hex Unicode Escape Codes
-    hex_u_points = get_hex_u_points(decimal_u_points)
+    hex_u_points = font_utils.get_hex_u_points(decimal_u_points)
 
+    # Format and write the output file: do not abstract into a function, yet. The index range/table columns feature(s) will
+    # determine the structure.
     with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
         f.write(f"Unicode Point  |  Glyph   |   Name\n") 
     
@@ -40,57 +41,23 @@ def main():
         with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
             f.write(f"{hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
 
+# Input functions
+def get_file_name():
+    is_file = False
+    file_name = input("Input the font file name: ")
+    
+    if Path(file_name).is_file():
+        return file_name
+    else: 
+        while not Path(file_name).is_file():
+            overwrite_line("File does not exist. ")
+            file_name = input("Input the font file name: ")
+        return file_name
 
-#Utility functions
-
-def trim_filename(file_name):
-    output = []
-    for char in file_name:
-        if char == ".":
-            break
-        else:
-            output.append(char)
-
-    return "".join(output)
-
-def add_file_extension(file_name):
-    return "".join([file_name, ".txt"])
-
-def get_glyph_names(cmap):
-    result = []
-    for key in cmap:
-        result.append(cmap[key])
-    return result
-
-def get_decimal_u_points(cmap):
-    result = []
-    for key in cmap:
-        result.append(key)
-    return result
-            
-def get_hex_u_points(decimal_u_points):
-    # Return array of formatted hex u points.
-    hex_result = []
-
-    # Iterate over array of decimal u points.
-    for dec in decimal_u_points:
-        # Construct an array to be joined as string.
-        str_result = []
-        hex_point = hex(dec)
-        if dec < 65536:
-            str_result.append("\\u00")
-            str_result.append(hex_point[2:])
-        else:
-            str_result.append("\\U0000")
-            str_result.append(hex_point[2:])
-        hex_result.append("".join(str_result))
-
-    return hex_result
-
-def initialize_output_directory(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
-        
+def overwrite_line(text):
+    sys.stdout.write("\x1b[K")
+    sys.stdout.write("\r" + text)
+    sys.stdout.flush()
 
 if __name__ == "__main__":
     main()

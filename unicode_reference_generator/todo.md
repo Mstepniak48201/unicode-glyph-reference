@@ -4,3 +4,4 @@
 [ ] add error handling
 [ ] Abstract loose code out into functions, possibly into modules
 [ ] Add feature: User can input a range (0-indexed) of glyphs, and output a horizontal text table of the glyphs with a table of reference numbers below it.
+[ ] Add feature: Function that creates the default directory for output files. User may change path.
