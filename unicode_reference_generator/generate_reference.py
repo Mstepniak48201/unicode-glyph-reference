@@ -1,17 +1,32 @@
 import os
+import sys
 from pathlib import Path
 from fontTools import ttLib
 
+"""
+Order of operations:
+    1. Get input - no function
+    2. Create output directory
+        - store path in file
+        - call function and initialize
+    3. trim input file name
+    4. create output file name
+
+    5. Get reference to the font -> pass in file name
+    6. Get glyph names
+    7. Get decimal and hex points
+    8.
+
+"""
+
 def main():
-    file_name = input("File name: ")
+    # file_name = input("File name: ")
     output_dir = "./output_text_files"
+
+    file_name = get_file_name()
 
     # Initialize output directory
     initialize_output_directory(output_dir)
-
-    # Debug if input file exists
-    if Path(file_name).is_file():
-        print("The file exists")
 
     # Import the name of the input file to the output file, change extension, open new txt file.
     trimmed_file_name = trim_filename(file_name)
@@ -42,6 +57,23 @@ def main():
 
 
 #Utility functions
+
+def get_file_name():
+    is_file = False
+    file_name = input("Input the font file name: ")
+    
+    if Path(file_name).is_file():
+        return file_name
+    else: 
+        while not Path(file_name).is_file():
+            overwrite_line("File does not exist. ")
+            file_name = input("Input the font file name: ")
+        return file_name
+
+def overwrite_line(text):
+    sys.stdout.write("\x1b[K")
+    sys.stdout.write("\r" + text)
+    sys.stdout.flush()
 
 def trim_filename(file_name):
     output = []
