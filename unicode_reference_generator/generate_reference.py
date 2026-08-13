@@ -2,36 +2,21 @@ import os
 import sys
 from pathlib import Path
 from fontTools import ttLib
+import path_mod
 
-"""
-Order of operations:
-    1. Get input - no function
-    2. Create output directory
-        - store path in file
-        - call function and initialize
-    3. trim input file name
-    4. create output file name
-
-    5. Get reference to the font -> pass in file name
-    6. Get glyph names
-    7. Get decimal and hex points
-    8.
-
-"""
 
 def main():
-    # file_name = input("File name: ")
-    output_dir = "./output_text_files"
-
-    file_name = get_file_name()
-
     # Initialize output directory
+    # Use variable for now because future feature will allow user to enter a custom path.
+    output_dir = "./output_text_files"
     initialize_output_directory(output_dir)
 
-    # Import the name of the input file to the output file, change extension, open new txt file.
-    trimmed_file_name = trim_filename(file_name)
+    # Get .ttf file from user input
+    file_name = get_file_name()
+
+    # Change the file extension from the input .ttf file to .txt for the output file.
+    trimmed_file_name = trim_file_ext(file_name)
     output_file_name = add_file_extension(trimmed_file_name)
-    # output_file = open(output_file_name, "x")
 
     # Get reference to the font.
     font = ttLib.TTFont(file_name)
@@ -75,18 +60,6 @@ def overwrite_line(text):
     sys.stdout.write("\r" + text)
     sys.stdout.flush()
 
-def trim_filename(file_name):
-    output = []
-    for char in file_name:
-        if char == ".":
-            break
-        else:
-            output.append(char)
-
-    return "".join(output)
-
-def add_file_extension(file_name):
-    return "".join([file_name, ".txt"])
 
 def get_glyph_names(cmap):
     result = []
@@ -119,9 +92,6 @@ def get_hex_u_points(decimal_u_points):
 
     return hex_result
 
-def initialize_output_directory(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
         
 
 if __name__ == "__main__":
