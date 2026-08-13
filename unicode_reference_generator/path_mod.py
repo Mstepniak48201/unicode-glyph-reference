@@ -1,5 +1,6 @@
-# path_mod: functions for modifying file/directory paths 
+import os
 
+# path_mod: functions for modifying file/directory paths 
 def trim_file_ext(file_name):
     output = []
     for char in file_name:
