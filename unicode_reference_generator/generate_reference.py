@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 from fontTools import ttLib
 import path_mod
+import default_table_and_dir
 import font_utils
 
 def main():
@@ -13,6 +14,21 @@ def main():
     # Get .ttf file from user input
     file_name = get_file_name()
 
+    # Output file options
+    print("Enter the number for your output option.\n1 : Default table and output directory\n2 : Custom table, default output directory\n3 : Custom table and custom output directory\n")
+    output_option = input()
+
+    if output_option == "1":
+        default_table_and_dir.default_table_and_dir(file_name, output_dir)
+
+    """
+    elif output_option == 2:
+        custom_table.custom_table()
+    elif output_option == 3:
+        custom_table_and_dir.custom_table_and_dir()
+    """
+
+    """
     # Change the file extension from the input .ttf file to .txt for the output file.
     trimmed_file_name = path_mod.trim_file_ext(file_name)
     output_file_name = path_mod.add_file_extension(trimmed_file_name)
@@ -40,10 +56,10 @@ def main():
     for i in range(len(decimal_u_points)):
         with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
             f.write(f"{hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
+    """
 
 # Input functions
 def get_file_name():
-    is_file = False
     file_name = input("Input the font file name: ")
     
     if Path(file_name).is_file():
