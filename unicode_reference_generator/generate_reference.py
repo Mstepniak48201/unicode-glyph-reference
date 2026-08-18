@@ -1,9 +1,9 @@
 import sys
-from pathlib import Path
-from fontTools import ttLib
 import path_mod
+import input_ui
 import default_table_and_dir
 import font_utils
+from fontTools import ttLib
 
 def main():
     # Initialize output directory
@@ -12,11 +12,9 @@ def main():
     path_mod.initialize_output_directory(output_dir)
 
     # Get .ttf file from user input
-    file_name = get_file_name()
+    file_name = input_ui.get_file_name()
 
-    # Output file options
-    print("Enter the number for your output option.\n1 : Default table and output directory\n2 : Custom table, default output directory\n3 : Custom table and custom output directory\n")
-    output_option = input()
+    output_option = input_ui.get_output_option()
 
     if output_option == "1":
         default_table_and_dir.default_table_and_dir(file_name, output_dir)
@@ -57,23 +55,6 @@ def main():
         with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
             f.write(f"{hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
     """
-
-# Input functions
-def get_file_name():
-    file_name = input("Input the font file name: ")
-    
-    if Path(file_name).is_file():
-        return file_name
-    else: 
-        while not Path(file_name).is_file():
-            overwrite_line("File does not exist. ")
-            file_name = input("Input the font file name: ")
-        return file_name
-
-def overwrite_line(text):
-    sys.stdout.write("\x1b[K")
-    sys.stdout.write("\r" + text)
-    sys.stdout.flush()
 
 if __name__ == "__main__":
     main()
