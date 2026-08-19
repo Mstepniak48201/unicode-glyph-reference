@@ -1,4 +1,8 @@
+from fontTools import ttLib
+
 # font_utils: functions for extracting and modifying data from .ttf files
+
+
 
 def get_glyph_names(cmap):
     result = []

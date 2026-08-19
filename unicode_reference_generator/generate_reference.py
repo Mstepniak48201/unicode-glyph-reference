@@ -6,10 +6,6 @@ import font_utils
 from fontTools import ttLib
 
 def main():
-    # Initialize output directory
-    # Use variable for now because future feature will allow user to enter a custom path.
-    output_dir = "./output_text_files"
-    path_mod.initialize_output_directory(output_dir)
 
     # Get .ttf file from user input
     file_name = input_ui.get_file_name()
@@ -17,7 +13,12 @@ def main():
     output_option = input_ui.get_output_option()
 
     if output_option == "1":
+        # Initialize output directory
+        output_dir = "./output_text_files"
+        path_mod.initialize_output_directory(output_dir)
         default_table_and_dir.default_table_and_dir(file_name, output_dir)
+    elif output_option == "2":
+        custom_table.custom_table(file_name, output_dir)
 
     """
     elif output_option == 2:

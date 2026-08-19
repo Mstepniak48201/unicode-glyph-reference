@@ -1,4 +1,3 @@
-from fontTools import ttLib
 import path_mod
 import font_utils
 
@@ -6,8 +5,6 @@ def default_table_and_dir(file_name, output_dir):
     # Change the file extension from the input .ttf file to .txt for the output file.
     trimmed_file_name = path_mod.trim_file_ext(file_name)
     output_file_name = path_mod.add_file_extension(trimmed_file_name)
-
-    print(output_file_name)
 
     # Get reference to the font.
     font = ttLib.TTFont(file_name)
