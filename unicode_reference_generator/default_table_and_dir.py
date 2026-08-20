@@ -24,27 +24,38 @@ def default_table_and_dir(file_name, output_dir):
 
     # Output index array and formatting output doc
     glyph_index = []
-    # May need two arrays, or a better way of handling string/int conversions.
     for i in range(len(decimal_u_points)):
         glyph_index.append(i)
 
-    column_len = get_column_len("Index", glyph_index, 3) 
     
     fld_name = "Index"
+    column_len = get_column_len(glyph_index, 3, fld_name) 
     fld_name_len = len(fld_name)
-    fld_name_space = f"{(column_len - fld_name_len) * ' '}"
+    fld_name_padding = get_padding(column_len, fld_name)
+
+    hex_column_len = get_column_len(hex_u_points, 3)
+    name_column_len = get_column_len(glyph_names, 3, "Name")
 
     # Format and write the output file: do not abstract into a function, yet. The index range/table columns feature(s) will
     # determine the structure.
     with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
-        f.write(f"{fld_name}{fld_name_space}|   Unicode Point  |  Glyph   |   Name\n") 
+        f.write(f"{fld_name}{fld_name_padding}|   Unicode Point  |  Name              |   Glyph\n") 
     
     for i in range(len(decimal_u_points)):
-        val_space = f"{(column_len - len(str(glyph_index[i]))) * ' '}"
+        index_padding = get_padding(column_len, glyph_index[i])
+        padding_left = "    "
+        hex_padding = get_padding(hex_column_len, hex_u_points[i])
+        name_padding = get_padding(name_column_len, glyph_names[i])
+        
         with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
-            f.write(f"{glyph_index[i]}{val_space}        {hex_u_points[i]}         {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
+            f.write(
+                f"{glyph_index[i]}{index_padding}"
+                f"{padding_left}{hex_u_points[i]}{hex_padding}"
+                f"{padding_left}{glyph_names[i]}{name_padding}"
+                f"{padding_left}{chr(decimal_u_points[i])}\n"
+            )
 
-def get_column_len(fld_name, arr, space):
+def get_column_len(arr, space, fld_name=""):
     str_fld_name = str(fld_name)
     str_arr = []
     for i in range(len(arr)):
@@ -62,4 +73,8 @@ def get_column_len(fld_name, arr, space):
         column_len = max_el_len + space
     return column_len
     
+def get_padding(column_len, el):
+    el_len = len(str(el))
+    return f"{(column_len - el_len) * ' '}"
+
     
