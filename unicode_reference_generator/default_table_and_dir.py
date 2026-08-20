@@ -22,14 +22,31 @@ def default_table_and_dir(file_name, output_dir):
     # Format Hex Unicode Escape Codes
     hex_u_points = font_utils.get_hex_u_points(decimal_u_points)
 
-    # Output index array
+    # Output index array and formatting output doc
     glyph_index = []
+    # May need two arrays, or a better way of handling string/int conversions.
+    for i in range(len(decimal_u_points)):
+        glyph_index.append(str(i))
+    max_el = max(glyph_index, key=len)    
+
+    fld_name = "Index"
+    fld_name_len = len(fld_name)
+    max_el_len = len(max_el)
+    column_len = 0
+
+    if fld_name_len > max_el_len:
+        column_len = fld_name_len + 3
+    else:
+        column_len = max_el_len + 3
+
+    fld_name_space = f"{(column_len - fld_name_len) * ' '}"
 
     # Format and write the output file: do not abstract into a function, yet. The index range/table columns feature(s) will
     # determine the structure.
     with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
-        f.write(f"Index   |   Unicode Point  |  Glyph   |   Name\n") 
+        f.write(f"{fld_name}{fld_name_space}|   Unicode Point  |  Glyph   |   Name\n") 
     
     for i in range(len(decimal_u_points)):
+        val_space = f"{(column_len - len(str(glyph_index[i]))) * ' '}"
         with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
-            f.write(f"  {i}              {hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
+            f.write(f"{glyph_index[i]}{val_space}        {hex_u_points[i]}         {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
