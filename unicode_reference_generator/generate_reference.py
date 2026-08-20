@@ -14,11 +14,13 @@ def main():
 
     if output_option == "1":
         # Initialize output directory
-        output_dir = "./output_text_files"
-        path_mod.initialize_output_directory(output_dir)
+        output_dir = path_mod.initialize_output_dir()
         default_table_and_dir.default_table_and_dir(file_name, output_dir)
     elif output_option == "2":
-        custom_table.custom_table(file_name, output_dir)
+        path_mod.initialize_output_dir()
+        # custom_table(file_name, output_dir)
+
+
 
     """
     elif output_option == 2:

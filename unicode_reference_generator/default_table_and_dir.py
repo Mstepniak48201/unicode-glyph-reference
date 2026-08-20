@@ -1,3 +1,4 @@
+from fontTools import ttLib
 import path_mod
 import font_utils
 
@@ -21,11 +22,14 @@ def default_table_and_dir(file_name, output_dir):
     # Format Hex Unicode Escape Codes
     hex_u_points = font_utils.get_hex_u_points(decimal_u_points)
 
+    # Output index array
+    glyph_index = []
+
     # Format and write the output file: do not abstract into a function, yet. The index range/table columns feature(s) will
     # determine the structure.
     with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
-        f.write(f"Unicode Point  |  Glyph   |   Name\n") 
+        f.write(f"Index   |   Unicode Point  |  Glyph   |   Name\n") 
     
     for i in range(len(decimal_u_points)):
         with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
-            f.write(f"{hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
+            f.write(f"  {i}              {hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
