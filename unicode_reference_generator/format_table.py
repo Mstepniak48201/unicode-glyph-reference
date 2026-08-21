@@ -26,7 +26,6 @@ def default_table_and_dir(file_name, output_dir):
     glyph_index = []
     for i in range(len(decimal_u_points)):
         glyph_index.append(i)
-
     
     fld_name = "Index"
     column_len = get_column_len(glyph_index, 3, fld_name) 
@@ -55,6 +54,12 @@ def default_table_and_dir(file_name, output_dir):
                 f"{padding_left}{chr(decimal_u_points[i])}\n"
             )
 
+# def custom_table(file_name, output_dir):
+
+
+
+
+# Utility Functions
 def get_column_len(arr, space, fld_name=""):
     str_fld_name = str(fld_name)
     str_arr = []

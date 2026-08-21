@@ -1,7 +1,7 @@
 import sys
 import path_mod
 import input_ui
-import default_table_and_dir
+import format_table
 import font_utils
 from fontTools import ttLib
 
@@ -15,10 +15,10 @@ def main():
     if output_option == "1":
         # Initialize output directory
         output_dir = path_mod.initialize_output_dir()
-        default_table_and_dir.default_table_and_dir(file_name, output_dir)
+        format_table.default_table_and_dir(file_name, output_dir)
     elif output_option == "2":
         path_mod.initialize_output_dir()
-        # custom_table(file_name, output_dir)
+        # format_table.custom_table(file_name, output_dir)
 
 
 
