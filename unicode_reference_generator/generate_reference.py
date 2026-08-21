@@ -1,18 +1,35 @@
 import sys
-from pathlib import Path
-from fontTools import ttLib
 import path_mod
+import input_ui
+import format_table
 import font_utils
+from fontTools import ttLib
 
 def main():
-    # Initialize output directory
-    # Use variable for now because future feature will allow user to enter a custom path.
-    output_dir = "./output_text_files"
-    path_mod.initialize_output_directory(output_dir)
 
     # Get .ttf file from user input
-    file_name = get_file_name()
+    file_name = input_ui.get_file_name()
 
+    output_option = input_ui.get_output_option()
+
+    if output_option == "1":
+        # Initialize output directory
+        output_dir = path_mod.initialize_output_dir()
+        format_table.default_table_and_dir(file_name, output_dir)
+    elif output_option == "2":
+        path_mod.initialize_output_dir()
+        # format_table.custom_table(file_name, output_dir)
+
+
+
+    """
+    elif output_option == 2:
+        custom_table.custom_table()
+    elif output_option == 3:
+        custom_table_and_dir.custom_table_and_dir()
+    """
+
+    """
     # Change the file extension from the input .ttf file to .txt for the output file.
     trimmed_file_name = path_mod.trim_file_ext(file_name)
     output_file_name = path_mod.add_file_extension(trimmed_file_name)
@@ -40,24 +57,7 @@ def main():
     for i in range(len(decimal_u_points)):
         with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
             f.write(f"{hex_u_points[i]}             {chr(decimal_u_points[i])}          {glyph_names[i]}\n")
-
-# Input functions
-def get_file_name():
-    is_file = False
-    file_name = input("Input the font file name: ")
-    
-    if Path(file_name).is_file():
-        return file_name
-    else: 
-        while not Path(file_name).is_file():
-            overwrite_line("File does not exist. ")
-            file_name = input("Input the font file name: ")
-        return file_name
-
-def overwrite_line(text):
-    sys.stdout.write("\x1b[K")
-    sys.stdout.write("\r" + text)
-    sys.stdout.flush()
+    """
 
 if __name__ == "__main__":
     main()
