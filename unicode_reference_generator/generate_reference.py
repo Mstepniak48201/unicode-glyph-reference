@@ -11,7 +11,9 @@ def main():
     file_name = input_ui.get_file_name()
 
     output_option = input_ui.get_output_option()
+    print(output_option)
 
+    """
     if output_option == "1":
         # Initialize output directory
         output_dir = path_mod.initialize_output_dir()
@@ -19,7 +21,7 @@ def main():
     elif output_option == "2":
         path_mod.initialize_output_dir()
         # format_table.custom_table(file_name, output_dir)
-
+    """
 
 
     """

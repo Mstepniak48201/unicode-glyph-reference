@@ -12,8 +12,28 @@ def get_file_name():
             file_name = input("Input the font file name: ")
         return file_name
 
-
 def get_output_option():
-    print("Enter the number for your output option.\n1 : Default table and output directory\n2 : Custom table, default output directory\n3 : Custom table and custom output directory")
-    option = input()
-    return option
+    print("Enter the number for your output option.\n1 : Default output directory (./output_text_files)\n2 : Choose output directory")
+    dir_option = input()
+
+    if is_valid(dir_option):
+        return dir_option
+    else:
+        while not is_valid(dir_option):
+            ascii_escape_utils.erase_lines(4)
+            print("Not a valid option! Enter the number for your output option.\n1 : Default output directory (./output_text_files)\n2 : Choose output directory")
+            dir_option = input() 
+        return dir_option
+
+
+def get_table_option():
+    print("Enter the number for your table option.\n1 : Default\n2 : Custom glyph table")
+    table_option = input()
+    return table_option
+    
+# Utility functions
+def is_valid(option):
+    if option == "1" or option == "2":
+        return True
+    else:
+        return False
