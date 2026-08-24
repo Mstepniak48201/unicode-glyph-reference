@@ -7,26 +7,13 @@ def default_table_and_dir(file_name, output_dir):
     trimmed_file_name = path_mod.trim_file_ext(file_name)
     output_file_name = path_mod.add_file_extension(trimmed_file_name)
 
-    # Get reference to the font.
-    font = ttLib.TTFont(file_name)
-
-    # Get the cmap table (Python dict) from the font. Key: Value pairs are decimal_val: string_val
-    font_cmap = font.getBestCmap()
-
-    # Get glyph names
-    glyph_names = font_utils.get_glyph_names(font_cmap)
-
-    # Decimal Unicode Points
-    decimal_u_points = font_utils.get_decimal_u_points(font_cmap)
-
-    # Format Hex Unicode Escape Codes
-    hex_u_points = font_utils.get_hex_u_points(decimal_u_points)
-
-    # Output index array and formatting output doc
-    glyph_index = []
-    for i in range(len(decimal_u_points)):
-        glyph_index.append(i)
-    
+    # Get font data
+    font_data = font_utils.get_font_data(file_name)
+    glyph_names = font_data["glyph_names"]
+    decimal_u_points = font_data["decimal_u_points"]
+    hex_u_points = font_data["hex_u_points"]
+    glyph_index = font_data["index"]
+      
     fld_name = "Index"
     column_len = get_column_len(glyph_index, 3, fld_name) 
     fld_name_len = len(fld_name)
@@ -40,7 +27,7 @@ def default_table_and_dir(file_name, output_dir):
     with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
         f.write(f"{fld_name}{fld_name_padding}|   Unicode Point  |  Name              |   Glyph\n") 
     
-    for i in range(len(decimal_u_points)):
+    for i in range(len(glyph_index)):
         index_padding = get_padding(column_len, glyph_index[i])
         padding_left = "    "
         hex_padding = get_padding(hex_column_len, hex_u_points[i])
