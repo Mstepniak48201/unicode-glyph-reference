@@ -41,10 +41,18 @@ def default_table_and_dir(file_name, output_dir):
                 f"{padding_left}{chr(decimal_u_points[i])}\n"
             )
 
-# def custom_table(file_name, output_dir):
+def custom_table(file_name, output_dir, index_range):
+    trimmed_file_name = path_mod.trim_file_ext(file_name)
+    output_file_name = path_mod.add_file_extension(trimmed_file_name)
 
+    # Get font data
+    font_data = font_utils.get_font_data(file_name)
+    decimal_u_points = font_data["decimal_u_points"]
 
+    
 
+    
+    pass
 
 # Utility Functions
 def get_column_len(arr, space, fld_name=""):

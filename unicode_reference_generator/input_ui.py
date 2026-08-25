@@ -25,7 +25,6 @@ def get_output_option():
             dir_option = input() 
         return dir_option
 
-
 def get_table_option():
     print("Enter the number for your table option.\n1 : Default\n2 : Custom glyph table")
     table_option = input()
@@ -38,6 +37,9 @@ def get_table_option():
             print("Not a valid option! Enter the number for your table option.\n1 : Default\n2 : Custom glyph table")
             table_option = input() 
         return table_option
+
+def get_custom_table():
+   pass 
     
 # Utility functions
 def is_valid(option):

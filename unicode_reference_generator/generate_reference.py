@@ -12,14 +12,20 @@ def main():
 
     output_option = input_ui.get_output_option()
 
+    # Initialize output directory
     if output_option == "1":
-        # Initialize output directory
         output_dir = path_mod.initialize_output_dir()
     elif output_option == "2":
         input_dir = input("Enter the path for your output directory: ")
         output_dir = path_mod.initialize_output_dir(input_dir)
     
-    print(output_dir)
+    table_option = input_ui.get_table_option()
+
+    if table_option == "1":
+        format_table.default_table_and_dir(file_name, output_dir)
+    elif output_option == "2":
+        format_table.custom_table(file_name, output_dir)
+
 
 
 
