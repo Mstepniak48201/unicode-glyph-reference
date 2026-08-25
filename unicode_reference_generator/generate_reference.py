@@ -11,7 +11,17 @@ def main():
     file_name = input_ui.get_file_name()
 
     output_option = input_ui.get_output_option()
-    print(output_option)
+
+    if output_option == "1":
+        # Initialize output directory
+        output_dir = path_mod.initialize_output_dir()
+    elif output_option == "2":
+        input_dir = input("Enter the path for your output directory: ")
+        output_dir = path_mod.initialize_output_dir(input_dir)
+    
+    print(output_dir)
+
+
 
     """
     if output_option == "1":

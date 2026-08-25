@@ -29,7 +29,15 @@ def get_output_option():
 def get_table_option():
     print("Enter the number for your table option.\n1 : Default\n2 : Custom glyph table")
     table_option = input()
-    return table_option
+
+    if is_valid(table_option):
+        return table_option
+    else:
+        while not is_valid(table_option):
+            ascii_escape_utils.erase_lines(4)
+            print("Not a valid option! Enter the number for your table option.\n1 : Default\n2 : Custom glyph table")
+            table_option = input() 
+        return table_option
     
 # Utility functions
 def is_valid(option):
