@@ -11,6 +11,8 @@ def get_file_name():
             ascii_escape_utils.move_cursor_up()
             ascii_escape_utils.overwrite_line("File does not exist. ")
             file_name = input("Input the font file name: ")
+        ascii_escape_utils.move_cursor_up()
+        ascii_escape_utils.erase_line()
         return file_name
         
 
@@ -19,12 +21,15 @@ def get_output_option():
     dir_option = input()
 
     if is_valid(dir_option):
+        ascii_escape_utils.erase_lines(4)
         return dir_option
     else:
         while not is_valid(dir_option):
             ascii_escape_utils.erase_lines(4)
             print("Not a valid option! Enter the number for your output option.\n1 : Default output directory (./output_text_files)\n2 : Choose output directory")
             dir_option = input() 
+        
+        ascii_escape_utils.erase_lines(4)
         return dir_option
 
 def get_table_option():
@@ -32,12 +37,14 @@ def get_table_option():
     table_option = input()
 
     if is_valid(table_option):
+        ascii_escape_utils.erase_lines(4)
         return table_option
     else:
         while not is_valid(table_option):
             ascii_escape_utils.erase_lines(4)
             print("Not a valid option! Enter the number for your table option.\n1 : Default\n2 : Custom glyph table")
             table_option = input() 
+        ascii_escape_utils.erase_lines(4)
         return table_option
 
 def get_custom_table_range(glyph_arr):
