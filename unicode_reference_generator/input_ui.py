@@ -58,7 +58,7 @@ def get_custom_table_range(glyph_arr):
         while not is_index(split_input, max_index):
             input_range = input("Not a valid range! Enter the comma-separated (start_index, end_index) index range of the glyphs you want to examine:  ")
             split_input = input_range.split(", ", 1)
-        return is_index(splite_input, max_index)
+        return is_index(split_input, max_index)
              
 # Utility functions
 def is_valid(option):
