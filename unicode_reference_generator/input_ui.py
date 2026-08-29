@@ -48,7 +48,6 @@ def get_table_option():
         return table_option
 
 def get_custom_table_range(glyph_arr):
-    print("get_custom_rable_range() called")
     input_range = input("Enter the comma-separated (start_index, end_index) index range of the glyphs you want to examine: ") 
     split_input = input_range.split(", ", 1)
     max_index = len(glyph_arr) - 1
@@ -57,8 +56,7 @@ def get_custom_table_range(glyph_arr):
         return is_index(split_input, max_index)
     else:
         while not is_index(split_input, max_index):
-            ascii_escape_utils.erase_lines(1)
-            input_range = ("Not a valid range! Enter the comma-separated (start_index, end_index) index range of the glyphs you want to examine:  ")
+            input_range = input("Not a valid range! Enter the comma-separated (start_index, end_index) index range of the glyphs you want to examine:  ")
             split_input = input_range.split(", ", 1)
         return is_index(splite_input, max_index)
              
@@ -70,6 +68,7 @@ def is_valid(option):
         return False
 
 def is_index(arr, max_index):
+    print("is_index called!")
     index_arr = []
     if len(arr) != 2:
         return False
