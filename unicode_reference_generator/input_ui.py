@@ -5,13 +5,15 @@ def get_file_name():
     file_name = input("Input the font file name: ")
     
     if Path(file_name).is_file():
+        ascii_escape_utils.move_cursor_up(1)
+        ascii_escape_utils.erase_line()
         return file_name
     else: 
         while not Path(file_name).is_file():
             ascii_escape_utils.move_cursor_up()
             ascii_escape_utils.overwrite_line("File does not exist. ")
             file_name = input("Input the font file name: ")
-        ascii_escape_utils.move_cursor_up()
+        ascii_escape_utils.move_cursor_up(1)
         ascii_escape_utils.erase_line()
         return file_name
         
@@ -68,7 +70,6 @@ def is_valid(option):
         return False
 
 def is_index(arr, max_index):
-    print("is_index called!")
     index_arr = []
     if len(arr) != 2:
         return False

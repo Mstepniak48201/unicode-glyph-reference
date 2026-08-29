@@ -52,7 +52,7 @@ def custom_table(file_name, output_dir):
 
     table_range = input_ui.get_custom_table_range(decimal_u_points)
 
-    print("custom table range and make functions working")
+    print(f"custom table range and make functions working. table_range: {table_range}")
 
 # Utility Functions
 def get_column_len(arr, space, fld_name=""):
