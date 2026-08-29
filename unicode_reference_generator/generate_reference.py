@@ -23,9 +23,8 @@ def main():
 
     if table_option == "1":
         format_table.default_table_and_dir(file_name, output_dir)
-    elif output_option == "2":
+    elif table_option == "2":
         format_table.custom_table(file_name, output_dir)
-
 
 
 

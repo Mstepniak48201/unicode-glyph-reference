@@ -1,6 +1,7 @@
 from fontTools import ttLib
 import path_mod
 import font_utils
+import input_ui
 
 def default_table_and_dir(file_name, output_dir):
     # Change the file extension from the input .ttf file to .txt for the output file.
@@ -41,7 +42,7 @@ def default_table_and_dir(file_name, output_dir):
                 f"{padding_left}{chr(decimal_u_points[i])}\n"
             )
 
-def custom_table(file_name, output_dir, index_range):
+def custom_table(file_name, output_dir):
     trimmed_file_name = path_mod.trim_file_ext(file_name)
     output_file_name = path_mod.add_file_extension(trimmed_file_name)
 
@@ -49,10 +50,9 @@ def custom_table(file_name, output_dir, index_range):
     font_data = font_utils.get_font_data(file_name)
     decimal_u_points = font_data["decimal_u_points"]
 
-    
+    table_range = input_ui.get_custom_table_range(decimal_u_points)
 
-    
-    pass
+    print("custom table range and make functions working")
 
 # Utility Functions
 def get_column_len(arr, space, fld_name=""):
