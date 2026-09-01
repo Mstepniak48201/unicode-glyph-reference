@@ -2,7 +2,7 @@ import sys
 import path_mod
 import input_ui
 import format_table
-import ascii_escape_utils
+import ansi_utils
 
 def main():
 
@@ -17,8 +17,8 @@ def main():
     elif output_option == "2":
         input_dir = input("Enter the path for your output directory: ")
         output_dir = path_mod.initialize_output_dir(input_dir)
-        ascii_escape_utils.move_cursor_up()
-        ascii_escape_utils.erase_line()
+        ansi_utils.move_cursor_up()
+        ansi_utils.erase_line()
     
     table_option = input_ui.get_table_option()
 

@@ -1,37 +1,36 @@
 from pathlib import Path
-import ascii_escape_utils
+import ansi_utils
 
 def get_file_name():
     file_name = input("Input the font file name: ")
     
     if Path(file_name).is_file():
-        ascii_escape_utils.move_cursor_up(1)
-        ascii_escape_utils.erase_line()
+        ansi_utils.move_cursor_up(1)
+        ansi_utils.erase_line()
         return file_name
     else: 
         while not Path(file_name).is_file():
-            ascii_escape_utils.move_cursor_up()
-            ascii_escape_utils.overwrite_line("File does not exist. ")
+            ansi_utils.move_cursor_up()
+            ansi_utils.overwrite_line("File does not exist. ")
             file_name = input("Input the font file name: ")
-        ascii_escape_utils.move_cursor_up(1)
-        ascii_escape_utils.erase_line()
+        ansi_utils.move_cursor_up(1)
+        ansi_utils.erase_line()
         return file_name
         
-
 def get_output_option():
     print("Enter the number for your output option.\n1 : Default output directory (./output_text_files)\n2 : Choose output directory")
     dir_option = input()
 
     if is_valid(dir_option):
-        ascii_escape_utils.erase_lines(4)
+        ansi_utils.erase_lines(4)
         return dir_option
     else:
         while not is_valid(dir_option):
-            ascii_escape_utils.erase_lines(4)
+            ansi_utils.erase_lines(4)
             print("Not a valid option! Enter the number for your output option.\n1 : Default output directory (./output_text_files)\n2 : Choose output directory")
             dir_option = input() 
         
-        ascii_escape_utils.erase_lines(4)
+        ansi_utils.erase_lines(4)
         return dir_option
 
 def get_table_option():
@@ -39,14 +38,14 @@ def get_table_option():
     table_option = input()
 
     if is_valid(table_option):
-        ascii_escape_utils.erase_lines(4)
+        ansi_utils.erase_lines(4)
         return table_option
     else:
         while not is_valid(table_option):
-            ascii_escape_utils.erase_lines(4)
+            ansi_utils.erase_lines(4)
             print("Not a valid option! Enter the number for your table option.\n1 : Default\n2 : Custom glyph table")
             table_option = input() 
-        ascii_escape_utils.erase_lines(4)
+        ansi_utils.erase_lines(4)
         return table_option
 
 def get_custom_table_range(glyph_arr):
@@ -58,6 +57,8 @@ def get_custom_table_range(glyph_arr):
         return is_index(split_input, max_index)
     else:
         while not is_index(split_input, max_index):
+            ansi_utils.move_cursor_up()
+            ansi_utils.erase_line()
             input_range = input("Not a valid range! Enter the comma-separated (start_index, end_index) index range of the glyphs you want to examine:  ")
             split_input = input_range.split(", ", 1)
         return is_index(split_input, max_index)
