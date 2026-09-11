@@ -86,6 +86,8 @@ def custom_table(file_name, output_dir):
             print_index += 1
         print("\n")
     
+    with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
+        f.write(f"Font: {trimmed_file_name} Indices: {start_index}-{end_index} Glyphs: {decimal_u_points[start_index]}-{decimal_u_points[end_index]} \n") 
     
     print(f"custom table range and make functions working. table_range: {table_range} columns: {columns}")
 
