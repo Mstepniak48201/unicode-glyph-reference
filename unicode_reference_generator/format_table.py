@@ -59,20 +59,12 @@ def custom_table(file_name, output_dir):
     end_index = table_range[1]
     range_len = (end_index - start_index) + 1
     output = []
-
-    # columns: the length of each output array
-    # rows: range_len = 10, columns = 3 -> rows = 4
-    # if range_len % columns != 0: rows = (range_len / columns) + 1
-    # else: rows = range_len / columns
-    # output_len = columns * rows
-    
+ 
     # Get rows
     if range_len % columns != 0:
         rows = (range_len // columns) + 1
     else:
         rows = range_len // columns
-
-    print(f"rows: {range_len} / {columns} = {rows}")
 
     # Get array to print
     print_arr_len = int(rows) * int(columns)
@@ -80,24 +72,20 @@ def custom_table(file_name, output_dir):
     u_point = int(start_index)
 
     for i in range(print_arr_len):
-        print(f"u_point: {u_point}, end_index: {end_index}")
         if u_point > end_index:
             print_arr.append("x")
         else:
             print_arr.append(decimal_u_points[u_point])
         u_point += 1
-    
-    """
-    for i in range(range_len):
-        print(f"u_point: {u_point}, end_index: {end_index}")
-        if u_point > end_index:
-            print_arr.append("x")
-        else:
-            print_arr.append(decimal_u_points[u_point])
-        u_point += 1
-    """
 
-    print(print_arr)
+    # Print array to columns and rows
+    print_index = 0
+    for i in range(rows):
+        for j in range(columns):
+            print(f"{print_arr[print_index], }") 
+            print_index += 1
+        print("\n")
+    
     
     print(f"custom table range and make functions working. table_range: {table_range} columns: {columns}")
 
