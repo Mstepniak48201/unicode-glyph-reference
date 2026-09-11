@@ -48,12 +48,31 @@ def get_table_option():
         ansi_utils.erase_lines(4)
         return table_option
 
+def get_custom_table_columns(glyph_arr):
+    input_columns = input("Enter the number of columns for the glyph table: ")
+    max_columns = len(glyph_arr) - 1
+
+    if int(input_columns) <= max_columns:
+        ansi_utils.move_cursor_up(1)
+        ansi_utils.erase_line()
+        return int(input_columns)
+    else:
+        while not int(input_columns) >= max_columns:
+            ansi_utils.move_cursor_up()
+            ansi_utils.erase_line()
+            input_columns = input("Invalid input. Enter the number of columns for the glyph table: ")
+        ansi_utils.move_cursor_up(1)
+        ansi_utils.erase_line()
+        return int(input_columns)
+
 def get_custom_table_range(glyph_arr):
     input_range = input("Enter the comma-separated (start_index, end_index) index range of the glyphs you want to examine: ") 
     split_input = input_range.split(", ", 1)
     max_index = len(glyph_arr) - 1
 
     if is_index(split_input, max_index):
+        ansi_utils.move_cursor_up(1)
+        ansi_utils.erase_line()
         return is_index(split_input, max_index)
     else:
         while not is_index(split_input, max_index):
@@ -61,6 +80,8 @@ def get_custom_table_range(glyph_arr):
             ansi_utils.erase_line()
             input_range = input("Not a valid range! Enter the comma-separated (start_index, end_index) index range of the glyphs you want to examine:  ")
             split_input = input_range.split(", ", 1)
+        ansi_utils.move_cursor_up(1)
+        ansi_utils.erase_line()
         return is_index(split_input, max_index)
              
 # Utility functions
@@ -82,7 +103,3 @@ def is_index(arr, max_index):
             return False
         index_arr.append(int(el))
     return index_arr
-
-
-
-

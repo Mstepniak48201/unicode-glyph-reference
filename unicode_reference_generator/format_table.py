@@ -14,7 +14,7 @@ def default_table_and_dir(file_name, output_dir):
     decimal_u_points = font_data["decimal_u_points"]
     hex_u_points = font_data["hex_u_points"]
     glyph_index = font_data["index"]
-      
+       
     fld_name = "Index"
     column_len = get_column_len(glyph_index, 3, fld_name) 
     fld_name_len = len(fld_name)
@@ -50,9 +50,56 @@ def custom_table(file_name, output_dir):
     font_data = font_utils.get_font_data(file_name)
     decimal_u_points = font_data["decimal_u_points"]
 
-    table_range = input_ui.get_custom_table_range(decimal_u_points)
+    # Get number of columns
+    columns = input_ui.get_custom_table_columns(decimal_u_points)
 
-    print(f"custom table range and make functions working. table_range: {table_range}")
+    # Get start and end index
+    table_range = input_ui.get_custom_table_range(decimal_u_points)
+    start_index = table_range[0]
+    end_index = table_range[1]
+    range_len = (end_index - start_index) + 1
+    output = []
+
+    # columns: the length of each output array
+    # rows: range_len = 10, columns = 3 -> rows = 4
+    # if range_len % columns != 0: rows = (range_len / columns) + 1
+    # else: rows = range_len / columns
+    # output_len = columns * rows
+    
+    # Get rows
+    if range_len % columns != 0:
+        rows = (range_len // columns) + 1
+    else:
+        rows = range_len // columns
+
+    print(f"rows: {range_len} / {columns} = {rows}")
+
+    # Get array to print
+    print_arr_len = int(rows) * int(columns)
+    print_arr = []
+    u_point = int(start_index)
+
+    for i in range(print_arr_len):
+        print(f"u_point: {u_point}, end_index: {end_index}")
+        if u_point > end_index:
+            print_arr.append("x")
+        else:
+            print_arr.append(decimal_u_points[u_point])
+        u_point += 1
+    
+    """
+    for i in range(range_len):
+        print(f"u_point: {u_point}, end_index: {end_index}")
+        if u_point > end_index:
+            print_arr.append("x")
+        else:
+            print_arr.append(decimal_u_points[u_point])
+        u_point += 1
+    """
+
+    print(print_arr)
+    
+    print(f"custom table range and make functions working. table_range: {table_range} columns: {columns}")
 
 # Utility Functions
 def get_column_len(arr, space, fld_name=""):
@@ -60,7 +107,7 @@ def get_column_len(arr, space, fld_name=""):
     str_arr = []
     for i in range(len(arr)):
         str_arr.append(str(arr[i]))
- 
+
     max_el = max(str_arr, key=len)
     max_el_len = len(max_el)
     fld_name_len = len(str_fld_name)
@@ -76,5 +123,3 @@ def get_column_len(arr, space, fld_name=""):
 def get_padding(column_len, el):
     el_len = len(str(el))
     return f"{(column_len - el_len) * ' '}"
-
-    
