@@ -69,7 +69,7 @@ def custom_table(file_name, output_dir):
     # Get array to print
     print_arr_len = int(rows) * int(columns)
     print_arr = []
-    u_point = int(start_index)
+    u_point = start_index
 
     for i in range(print_arr_len):
         if u_point > end_index:
@@ -80,16 +80,30 @@ def custom_table(file_name, output_dir):
 
     # Print array to columns and rows
     print_index = 0
+    """
     for i in range(rows):
         for j in range(columns):
             print(f"{print_arr[print_index], }") 
             print_index += 1
         print("\n")
+    """
     
     with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
         f.write(f"Font: {trimmed_file_name} Indices: {start_index}-{end_index} Glyphs: {decimal_u_points[start_index]}-{decimal_u_points[end_index]} \n") 
+
+    for i in range(rows):
+        for j in range(columns):
+            with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
+                if isinstance(print_arr[print_index], int):
+                    glyph = chr(int(print_arr[print_index]))
+                else:
+                    glyph = " "
+                f.write(f"{glyph}")
+                print_index += 1
+        with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
+            f.write("\n")
+            
     
-    print(f"custom table range and make functions working. table_range: {table_range} columns: {columns}")
 
 # Utility Functions
 def get_column_len(arr, space, fld_name=""):
