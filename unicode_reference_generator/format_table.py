@@ -14,7 +14,7 @@ def default_table_and_dir(file_name, output_dir):
     decimal_u_points = font_data["decimal_u_points"]
     hex_u_points = font_data["hex_u_points"]
     glyph_index = font_data["index"]
-      
+       
     fld_name = "Index"
     column_len = get_column_len(glyph_index, 3, fld_name) 
     fld_name_len = len(fld_name)
@@ -43,24 +43,68 @@ def default_table_and_dir(file_name, output_dir):
             )
 
 def custom_table(file_name, output_dir):
-    trimmed_file_name = path_mod.trim_file_ext(file_name)
-    output_file_name = path_mod.add_file_extension(trimmed_file_name)
-
     # Get font data
     font_data = font_utils.get_font_data(file_name)
     decimal_u_points = font_data["decimal_u_points"]
 
+    # Get number of columns
+    columns = input_ui.get_custom_table_columns(decimal_u_points)
+
+    # Get start and end index
     table_range = input_ui.get_custom_table_range(decimal_u_points)
+    start_index = table_range[0]
+    end_index = table_range[1]
+    range_len = (end_index - start_index) + 1
+    output = []
+ 
+    # Get rows
+    if range_len % columns != 0:
+        rows = (range_len // columns) + 1
+    else:
+        rows = range_len // columns
 
-    print(f"custom table range and make functions working. table_range: {table_range}")
+    # Get array to print
+    print_arr_len = int(rows) * int(columns)
+    print_arr = []
+    u_point = start_index
 
+    for i in range(print_arr_len):
+        if u_point > end_index:
+            print_arr.append("x")
+        else:
+            print_arr.append(decimal_u_points[u_point])
+        u_point += 1
+    
+    # Get file name
+    trimmed_file_name = path_mod.trim_file_ext(file_name)
+    custom_name = f"{start_index}-{end_index}_{trimmed_file_name}"
+    output_file_name = path_mod.add_file_extension(custom_name)
+
+    # Print array to columns and rows
+    print_index = 0
+    
+    with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
+        f.write(f"Font: {trimmed_file_name} Indices: {start_index}-{end_index} Glyphs: {decimal_u_points[start_index]}-{decimal_u_points[end_index]} \n") 
+
+    for i in range(rows):
+        for j in range(columns):
+            with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
+                if isinstance(print_arr[print_index], int):
+                    glyph = chr(int(print_arr[print_index]))
+                else:
+                    glyph = " "
+                f.write(f"{glyph}")
+                print_index += 1
+        with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
+            f.write("\n")
+            
 # Utility Functions
 def get_column_len(arr, space, fld_name=""):
     str_fld_name = str(fld_name)
     str_arr = []
     for i in range(len(arr)):
         str_arr.append(str(arr[i]))
- 
+
     max_el = max(str_arr, key=len)
     max_el_len = len(max_el)
     fld_name_len = len(str_fld_name)
@@ -76,5 +120,3 @@ def get_column_len(arr, space, fld_name=""):
 def get_padding(column_len, el):
     el_len = len(str(el))
     return f"{(column_len - el_len) * ' '}"
-
-    
