@@ -43,9 +43,6 @@ def default_table_and_dir(file_name, output_dir):
             )
 
 def custom_table(file_name, output_dir):
-    trimmed_file_name = path_mod.trim_file_ext(file_name)
-    output_file_name = path_mod.add_file_extension(trimmed_file_name)
-
     # Get font data
     font_data = font_utils.get_font_data(file_name)
     decimal_u_points = font_data["decimal_u_points"]
@@ -77,16 +74,14 @@ def custom_table(file_name, output_dir):
         else:
             print_arr.append(decimal_u_points[u_point])
         u_point += 1
+    
+    # Get file name
+    trimmed_file_name = path_mod.trim_file_ext(file_name)
+    custom_name = f"{start_index}-{end_index}_{trimmed_file_name}"
+    output_file_name = path_mod.add_file_extension(custom_name)
 
     # Print array to columns and rows
     print_index = 0
-    """
-    for i in range(rows):
-        for j in range(columns):
-            print(f"{print_arr[print_index], }") 
-            print_index += 1
-        print("\n")
-    """
     
     with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
         f.write(f"Font: {trimmed_file_name} Indices: {start_index}-{end_index} Glyphs: {decimal_u_points[start_index]}-{decimal_u_points[end_index]} \n") 
@@ -103,8 +98,6 @@ def custom_table(file_name, output_dir):
         with open(f"{output_dir}/{output_file_name}", "a", encoding="utf-8") as f:
             f.write("\n")
             
-    
-
 # Utility Functions
 def get_column_len(arr, space, fld_name=""):
     str_fld_name = str(fld_name)
